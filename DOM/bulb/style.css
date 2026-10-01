@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+}
+
+main {
+  height: 60%;
+  width: 80%;
+  border: 2px solid white;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background: darkblue;
+  color: white;
+}
