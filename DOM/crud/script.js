@@ -3,6 +3,8 @@ let main = document.querySelector("main");
 
 let usersArr = [];
 
+let isUpdatedUser;
+
 let render = () => {
   main.innerHTML = "";
 
@@ -17,8 +19,8 @@ let render = () => {
                 <p>${val.email}</p>
             </div>
             <div class="btns">
-                <button>Update</button>
-                <button onclick="delUser(${index})" id="del">Delete</button>
+                <button onclick="updateUser(${val.id})">Update</button>
+                <button onclick="delUser(${val.id})" id="del">Delete</button>
             </div>
         </div>`;
   });
@@ -42,7 +44,13 @@ form.addEventListener("submit", (e) => {
     imageUrl,
   };
 
-  usersArr.push(obj);
+  if (isUpdatedUser) {
+    let index = usersArr.findIndex((val) => val.id === isUpdatedUser);
+    usersArr[index] = obj;
+    isUpdatedUser = null;
+  } else {
+    usersArr.push(obj);
+  }
 
   render();
 
@@ -50,7 +58,19 @@ form.addEventListener("submit", (e) => {
 });
 
 let delUser = (id) => {
-  usersArr.splice(id, 1);
+  //   usersArr.splice(id, 1);
+
+  usersArr = usersArr.filter((val) => val.id !== id);
 
   render();
+};
+
+let updateUser = (id) => {
+  isUpdatedUser = id;
+
+  let userObj = usersArr.find((val) => val.id === id);
+
+  form[0].value = userObj.name;
+  form[1].value = userObj.email;
+  form[2].value = userObj.imageUrl;
 };
