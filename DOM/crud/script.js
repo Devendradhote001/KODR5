@@ -1,7 +1,8 @@
 let form = document.querySelector("form");
 let main = document.querySelector("main");
 
-let usersArr = [];
+let usersArr = JSON.parse(localStorage.getItem("usersArr"));
+console.log(usersArr);
 
 let isUpdatedUser;
 
@@ -52,6 +53,8 @@ form.addEventListener("submit", (e) => {
     usersArr.push(obj);
   }
 
+  localStorage.setItem("usersArr", JSON.stringify(usersArr));
+
   render();
 
   form.reset();
@@ -61,6 +64,7 @@ let delUser = (id) => {
   //   usersArr.splice(id, 1);
 
   usersArr = usersArr.filter((val) => val.id !== id);
+  localStorage.setItem("usersArr", JSON.stringify(usersArr));
 
   render();
 };
@@ -74,3 +78,5 @@ let updateUser = (id) => {
   form[1].value = userObj.email;
   form[2].value = userObj.imageUrl;
 };
+
+render();
