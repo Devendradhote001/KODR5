@@ -2,12 +2,22 @@ import React from "react";
 import { useState } from "react";
 import { nanoid } from "nanoid";
 
-const Form = ({ setToggle, setUsersData }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    imageUrl: "",
-  });
+const Form = ({
+  setToggle,
+  setUsersData,
+  isEditedUser,
+  setIsEditedUser,
+  usersData,
+}) => {
+  const [formData, setFormData] = useState(
+    isEditedUser
+      ? isEditedUser
+      : {
+          name: "",
+          email: "",
+          imageUrl: "",
+        },
+  );
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -16,7 +26,23 @@ const Form = ({ setToggle, setUsersData }) => {
 
   let handleSubmit = (e) => {
     e.preventDefault();
-    setUsersData((prev) => [...prev, { ...formData, id: nanoid() }]);
+
+    if (isEditedUser) {
+      setUsersData((prev) => {
+        let updatedArr = prev.map((val) =>
+          val.id === isEditedUser.id ? { ...val, ...formData } : val,
+        );
+        localStorage.setItem("usersArr", JSON.stringify(updatedArr));
+        return updatedArr;
+      });
+
+      setIsEditedUser(null);
+    } else {
+      let arr = [...usersData, { ...formData, id: nanoid() }];
+      setUsersData(arr);
+      localStorage.setItem("usersArr", JSON.stringify(arr));
+    }
+
     setFormData({
       name: "",
       email: "",

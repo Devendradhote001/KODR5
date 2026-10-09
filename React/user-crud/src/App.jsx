@@ -6,13 +6,17 @@ import { useState } from "react";
 
 const App = () => {
   const [toggle, setToggle] = useState(false);
-  const [usersData, setUsersData] = useState([]);
+  const [usersData, setUsersData] = useState(
+    JSON.parse(localStorage.getItem("usersArr")) || [],
+  );
+  const [isEditedUser, setIsEditedUser] = useState(null);
 
   let handleDelete = (id) => {
-    // let arr = usersData.filter((val) => val.id !== id);
-    // setUsersData(arr);
+    let arr = usersData.filter((val) => val.id !== id);
+    setUsersData(arr);
+    localStorage.setItem("usersArr", JSON.stringify(arr));
 
-    setUsersData((prev) => prev.filter((val) => val.id !== id));
+    // setUsersData((prev) => prev.filter((val) => val.id !== id));
   };
 
   return (
@@ -20,11 +24,22 @@ const App = () => {
       <Navbar setToggle={setToggle} toggle={toggle} />
 
       {toggle ? (
-        <Form setUsersData={setUsersData} setToggle={setToggle} />
+        <Form
+          usersData={usersData}
+          setIsEditedUser={setIsEditedUser}
+          setUsersData={setUsersData}
+          setToggle={setToggle}
+          isEditedUser={isEditedUser}
+        />
       ) : (
         <div className="h-full p-4 flex gap-4">
           {usersData.map((val) => (
-            <UserCard user={val} handleDelete={handleDelete} />
+            <UserCard
+              setToggle={setToggle}
+              user={val}
+              handleDelete={handleDelete}
+              setIsEditedUser={setIsEditedUser}
+            />
           ))}
         </div>
       )}

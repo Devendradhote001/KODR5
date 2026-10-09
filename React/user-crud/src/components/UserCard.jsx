@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserCard = ({ user, handleDelete }) => {
+const UserCard = ({ user, handleDelete, setIsEditedUser, setToggle }) => {
   return (
     <div className="w-[20%] text-white border-2 border-white flex flex-col gap-2 p-2 rounded">
       <div className="h-[75%] w-full">
@@ -16,7 +16,15 @@ const UserCard = ({ user, handleDelete }) => {
       </div>
 
       <div className="flex justify-between">
-        <button className="p-1 bg-yellow-600 text-white rounded">Update</button>
+        <button
+          onClick={() => {
+            setToggle(true);
+            setIsEditedUser(user);
+          }}
+          className="p-1 bg-yellow-600 text-white rounded"
+        >
+          Update
+        </button>
         <button
           onClick={() => handleDelete(user.id)}
           className="p-1 bg-red-600 text-white rounded"
