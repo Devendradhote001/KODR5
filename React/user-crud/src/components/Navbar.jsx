@@ -1,6 +1,10 @@
 import React from "react";
+import { useContext } from "react";
+import { Store } from "../context/MyContext";
 
-const Navbar = ({ setToggle, toggle }) => {
+const Navbar = () => {
+  let { toggle, setToggle } = useContext(Store);
+
   return (
     <nav className="bg-blue-700 text-white flex items-center justify-between px-8 py-2">
       <h1>Logo</h1>

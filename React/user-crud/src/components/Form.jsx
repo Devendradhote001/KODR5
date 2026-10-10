@@ -1,14 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import { nanoid } from "nanoid";
+import { useContext } from "react";
+import { Store } from "../context/MyContext";
 
-const Form = ({
-  setToggle,
-  setUsersData,
-  isEditedUser,
-  setIsEditedUser,
-  usersData,
-}) => {
+const Form = () => {
+  let { setToggle, setUsersData, isEditedUser, setIsEditedUser } =
+    useContext(Store);
+
   const [formData, setFormData] = useState(
     isEditedUser
       ? isEditedUser

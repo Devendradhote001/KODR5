@@ -1,6 +1,9 @@
-import React from "react";
+import { useContext } from "react";
+import { Store } from "../context/MyContext";
 
-const UserCard = ({ user, handleDelete, setIsEditedUser, setToggle }) => {
+const UserCard = ({ user }) => {
+  let { handleDelete, setToggle, setIsEditedUser } = useContext(Store);
+
   return (
     <div className="w-[20%] text-white border-2 border-white flex flex-col gap-2 p-2 rounded">
       <div className="h-[75%] w-full">
