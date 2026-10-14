@@ -1,10 +1,10 @@
-import React from "react";
 import { ShoppingCart, Star } from "lucide-react";
 import { useContext } from "react";
 import { MyStore } from "../context/MyContext";
 
-const ProductCard = ({ product }) => {
-  let { setCartItems } = useContext(MyStore);
+const ProductCard = ({ product, quantity }) => {
+  let { setCartItems, incrementQuantity, decrementQuantity } =
+    useContext(MyStore);
 
   return (
     <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-gray-800 dark:bg-gray-900">
@@ -52,15 +52,33 @@ const ProductCard = ({ product }) => {
             </p>
           </div>
 
-          <button
-            onClick={() =>
-              setCartItems((prev) => [...prev, { ...product, quantity: 1 }])
-            }
-            className="flex items-center gap-2 rounded-xl bg-gray-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-gray-700 active:scale-95 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
-          >
-            <ShoppingCart size={17} />
-            Add to Cart
-          </button>
+          {quantity ? (
+            <div className="flex gap-5 items-center">
+              <button
+                onClick={() => decrementQuantity(product.id)}
+                className="py-1 px-4 rounded flex justify-center items-center bg-red-600 text-white border-0"
+              >
+                -
+              </button>
+              <p>{quantity}</p>
+              <button
+                onClick={() => incrementQuantity(product.id)}
+                className="py-1 px-4 rounded flex justify-center items-center bg-green-600 text-white border-0"
+              >
+                +
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() =>
+                setCartItems((prev) => [...prev, { ...product, quantity: 1 }])
+              }
+              className="flex items-center gap-2 rounded-xl bg-gray-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-gray-700 active:scale-95 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+            >
+              <ShoppingCart size={17} />
+              Add to Cart
+            </button>
+          )}
         </div>
       </div>
     </div>

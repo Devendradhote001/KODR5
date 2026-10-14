@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { MyStore } from "./context/MyContext";
 
 const App = () => {
-  let { toggle, productsData } = useContext(MyStore);
+  let { toggle, productsData, cartItems } = useContext(MyStore);
 
   return (
     <div>
@@ -14,12 +14,12 @@ const App = () => {
       {toggle ? (
         <CartScreen />
       ) : (
-        <div className="grid  gap-4 px-10 py-2 sm:grid-cols-2 md:grid-cols-3 grid-cols-1">
-          {productsData?.map((val) => (
+        <div className="grid gap-4 px-10 py-2 sm:grid-cols-2 md:grid-cols-3 grid-cols-1">
+          {productsData?.map((val) => {
+            let isInCart = cartItems.find((elem) => elem.id === val.id);
 
-            
-            <ProductCard key={val.id} product={val} />
-          ))}
+            return <ProductCard key={val.id} product={val} quantity={isInCart?.quantity} />;
+          })}
         </div>
       )}
     </div>
