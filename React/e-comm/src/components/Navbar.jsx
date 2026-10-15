@@ -1,6 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import { MyStore } from "../context/MyContext";
+import { NavLink } from "react-router";
 
 const Navbar = () => {
   let { setToggle } = useContext(MyStore);
@@ -12,9 +13,9 @@ const Navbar = () => {
       <div className="flex gap-5">
         <p>Home</p>
         <p>About</p>
+        <NavLink to={"/product"}>Product</NavLink>
       </div>
-
-      <button onClick={() => setToggle((prev) => !prev)}>Cart</button>
+      <NavLink to={"/cart"}>Cart</NavLink>
     </div>
   );
 };
