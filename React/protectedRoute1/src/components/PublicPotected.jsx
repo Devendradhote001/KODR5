@@ -8,7 +8,6 @@ const PublicProtected = ({ children }) => {
   if (loggedInUser) {
     return <Navigate to={"/home"} />;
   }
-
   return children;
 };
 
