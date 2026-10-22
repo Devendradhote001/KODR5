@@ -1,24 +1,14 @@
-import React, { useEffect, useState } from "react";
 import ProductCard from "../../components/ProductCard";
-import { axiosInstance } from "../../config/axiosInstance";
-import { getAllProductsApi } from "../../api/productApi";
+import { useProduct } from "../../hooks/useProducts";
 
 const ProductPage = () => {
-  const [productsData, setProductsData] = useState([]);
+  let { data, isPending } = useProduct();
 
-  let getProducts = async () => {
-    let data = await getAllProductsApi();
-    console.log(data);
-    setProductsData(data.products);
-  };
-
-  useEffect(() => {
-    getProducts();
-  }, []);
+  if (isPending) return <h1>Loading...</h1>;
 
   return (
     <div className="grid grid-cols-4 gap-2">
-      {productsData.map((val) => (
+      {data.products.map((val) => (
         <ProductCard key={val.id} product={val} />
       ))}
     </div>

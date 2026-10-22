@@ -1,28 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { axiosInstance } from "../../config/axiosInstance";
 import UserCard from "../../components/UserCard";
+import { fetchUser } from "../../hooks/useAuth";
 
 const AllUser = () => {
-  const [usersData, setUsersData] = useState([]);
+  let { data, isPending } = fetchUser();
 
-  let getAllUsers = async () => {
-    try {
-      let response = await axiosInstance.get("/users");
-      console.log(response);
-      setUsersData(response.data.users);
-    } catch (error) {
-      console.log("error in fetching users", error);
-    }
-  };
-
-  useEffect(() => {
-    getAllUsers();
-  }, []);
+  if (isPending) return <h1>Loading users...</h1>;
 
   return (
     <div className="grid grid-cols-2 gap-2">
-      {usersData.map((val) => (
-        <UserCard user={val} />
+      {data.users.map((val) => (
+        <UserCard key={val.id} user={val} />
       ))}
     </div>
   );

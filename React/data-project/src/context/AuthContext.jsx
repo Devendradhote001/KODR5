@@ -11,8 +11,8 @@ export const AuthProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("loggedInUser")),
   );
 
-  console.log("registered users->", registeredUsers);
-  console.log("logged in users ->", loggedInUser);
+  // console.log("registered users->", registeredUsers);
+  // console.log("logged in users ->", loggedInUser);
 
   return (
     <Auth.Provider

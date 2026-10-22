@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { useContextData } from "../context/AuthContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { createUserApi, getAllUsersApi } from "../api/userApi";
 
 export const useAuth = () => {
   let navigate = useNavigate();
@@ -60,4 +62,24 @@ export const useAuth = () => {
     toggle,
     setToggle,
   };
+};
+
+
+// this is for get
+export const fetchUser = () =>
+  useQuery({
+    queryKey: ["users"],
+    queryFn: getAllUsersApi,
+    staleTime: Infinity,
+  });
+
+
+  // for post
+export const createUser = () => {
+  const mutation = useMutation({
+    mutationKey: ["add user"],
+    mutationFn: (data) => createUserApi(data),
+  });
+
+  return mutation;
 };
