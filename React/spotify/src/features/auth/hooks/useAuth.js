@@ -2,10 +2,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { loginApi } from "../api/authApi";
+import { useDispatch } from "react-redux";
+import { addUser } from "../state/authSlice";
+import { loginApiAction } from "../state/authAction";
 
 export const useAuth = () => {
   const [showPassword, setShowPassword] = useState(false);
   let navigate = useNavigate();
+  let dispatch = useDispatch();
 
   let {
     register,
@@ -16,11 +20,9 @@ export const useAuth = () => {
     mode: "onChange",
   });
 
-  let handleLoginForm = async (data) => {
-    let response = await loginApi(data);
-    console.log(response);
-    localStorage.setItem("accessToken", JSON.stringify(response.accessToken));
-    
+  let handleLoginForm = (data) => {
+    dispatch(loginApiAction(data));
+    navigate("/main");
   };
 
   let handleRegisterForm = (data) => {
